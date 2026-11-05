@@ -73,8 +73,16 @@ export async function getStaticProps({ params: { prefix }, locale, revalidateRea
     revalidateReason,
   })
 
+  // =========================================================
+  // 🚨 终极兜底补丁：强制清洗 undefined 为 null
+  // 修复 Next.js 静态生成时的 Error serializing 崩溃
+  // =========================================================
+  const safeProps = JSON.parse(JSON.stringify(props, (key, value) => {
+    return value === undefined ? null : value;
+  }));
+
   return {
-    props,
+    props: safeProps,
     revalidate: isStaticExport
       ? undefined
       : siteConfig(
