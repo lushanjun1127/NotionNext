@@ -45,10 +45,7 @@ const ThemeGlobalHexo = createContext()
 export const useHexoGlobal = () => useContext(ThemeGlobalHexo)
 
 /**
- * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
- * @param props
- * @returns {JSX.Element}
- * @constructor
+ * 基础布局
  */
 const LayoutBase = props => {
   const { post, children, slotTop, className } = props
@@ -91,8 +88,8 @@ const LayoutBase = props => {
     </>
   )
 
-  // Algolia搜索框
   const searchModal = useRef(null)
+  const isSidebarReverse = siteConfig('LAYOUT_SIDEBAR_REVERSE', false)
 
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
@@ -125,9 +122,7 @@ const LayoutBase = props => {
           <div
             id='container-inner'
             className={
-              (JSON.parse(siteConfig('LAYOUT_SIDEBAR_REVERSE'))
-                ? 'flex-row-reverse'
-                : '') +
+              (isSidebarReverse ? 'flex-row-reverse' : '') +
               ' w-full mx-auto lg:flex lg:space-x-4 justify-center relative z-10'
             }>
             <div
@@ -175,21 +170,10 @@ const LayoutBase = props => {
   )
 }
 
-/**
- * 首页
- * 是一个博客列表，嵌入一个Hero大图
- * @param {*} props
- * @returns
- */
 const LayoutIndex = props => {
   return <LayoutPostList {...props} className='pt-8' />
 }
 
-/**
- * 博客列表
- * @param {*} props
- * @returns
- */
 const LayoutPostList = props => {
   return (
     <div className='pt-8'>
@@ -203,11 +187,6 @@ const LayoutPostList = props => {
   )
 }
 
-/**
- * 搜索
- * @param {*} props
- * @returns
- */
 const LayoutSearch = props => {
   const { keyword } = props
   const router = useRouter()
@@ -244,11 +223,6 @@ const LayoutSearch = props => {
   )
 }
 
-/**
- * 归档
- * @param {*} props
- * @returns
- */
 const LayoutArchive = props => {
   const { archivePosts } = props
   return (
@@ -268,11 +242,6 @@ const LayoutArchive = props => {
   )
 }
 
-/**
- * 文章详情
- * @param {*} props
- * @returns
- */
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
@@ -305,12 +274,10 @@ const LayoutSlug = props => {
             <article
               id='article-wrapper'
               className='subpixel-antialiased overflow-y-hidden'>
-              {/* Notion文章主体 */}
               <section className='px-5 justify-center mx-auto max-w-2xl lg:max-w-full'>
                 {post && <NotionPage post={post} />}
               </section>
 
-              {/* 分享 */}
               <ShareBar post={post} />
               {post?.type === 'Post' && (
                 <>
@@ -323,7 +290,6 @@ const LayoutSlug = props => {
 
             <div className='pt-4 border-dashed'></div>
 
-            {/* 评论互动 */}
             <div className='duration-200 overflow-x-auto bg-white dark:bg-hexo-black-gray px-3'>
               <Comment frontMatter={post} />
             </div>
@@ -334,23 +300,15 @@ const LayoutSlug = props => {
   )
 }
 
-/**
- * 404
- * @param {*} props
- * @returns
- */
 const Layout404 = props => {
   const router = useRouter()
   const { locale } = useGlobal()
   useEffect(() => {
-    // 延时3秒如果加载失败就返回首页
     setTimeout(() => {
       if (isBrowser) {
         const article = document.querySelector('#article-wrapper #notion-article')
         if (!article) {
-          router.push('/').then(() => {
-            // console.log('找不到页面', router.asPath)
-          })
+          router.push('/').then(() => {})
         }
       }
     }, 3000)
@@ -371,11 +329,6 @@ const Layout404 = props => {
   )
 }
 
-/**
- * 分类列表
- * @param {*} props
- * @returns
- */
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
@@ -409,11 +362,6 @@ const LayoutCategoryIndex = props => {
   )
 }
 
-/**
- * 标签列表
- * @param {*} props
- * @returns
- */
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
