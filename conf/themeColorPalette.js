@@ -101,7 +101,25 @@ const THEME_COLOR_DEFAULTS = {
     TEXT_SECONDARY_DARK: '#9ca3af',
     BORDER_DARK: '#333333'
   },
-  simple: { PRIMARY: '#dd3333', TEXT: '#111827' },
+  
+  // ==========================================
+  // 👇 这里是为你定制的 simple 主题配色 👇
+  // ==========================================
+  simple: { 
+    PRIMARY: '#2563eb', // 极客蓝（原来是红色 #dd3333）
+    TEXT: '#111827',
+    BG: '#ffffff',
+    CARD: '#ffffff',
+    BORDER: '#e5e7eb',
+    PRIMARY_DARK: '#60a5fa', // 暗黑模式下的亮蓝色
+    BG_DARK: '#0a0a0a', // 暗黑模式纯黑背景（更沉浸）
+    CARD_DARK: '#171717', // 暗黑模式卡片深灰
+    TEXT_DARK: '#f3f4f6',
+    TEXT_SECONDARY_DARK: '#9ca3af',
+    BORDER_DARK: '#262626'
+  },
+  // ==========================================
+
   starter: { PRIMARY: '#3758f9', PRIMARY_DARK: '#3758f9', BG_DARK: '#111928' },
   thoughtlite: {
     PRIMARY: '#2563eb',
