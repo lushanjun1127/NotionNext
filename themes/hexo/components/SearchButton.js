@@ -13,16 +13,25 @@ export default function SearchButton(props) {
   const { searchModal } = useHexoGlobal()
 
   function handleSearch() {
+    // 如果配置了 Algolia，则打开全屏搜索弹窗
     if (siteConfig('ALGOLIA_APP_ID')) {
       searchModal.current.openSearch()
     } else {
+      // 如果没有配置 Algolia，跳转到独立的搜索页面
       router.push('/search')
     }
   }
 
-  return <>
-        <div onClick={handleSearch} title={locale.NAV.SEARCH} alt={locale.NAV.SEARCH} className='cursor-pointer dark:text-white hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all'>
-            <i title={locale.NAV.SEARCH} className="fa-solid fa-magnifying-glass" />
-        </div>
-    </>
+  return (
+    <div 
+      onClick={handleSearch} 
+      title={locale.NAV.SEARCH} 
+      className='cursor-pointer text-gray-600 dark:text-gray-300 hover:text-[var(--theme-color)] dark:hover:text-[var(--theme-color)] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full w-10 h-10 flex justify-center items-center duration-300 transition-all group'
+    >
+      <i 
+        title={locale.NAV.SEARCH} 
+        className="fa-solid fa-magnifying-glass transform transition-transform duration-300 group-hover:scale-110" 
+      />
+    </div>
+  )
 }
